@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api', // Aapka backend URL
+  baseURL: 'https://faiz-salon-backend.onrender.com/api',
+  withCredentials: true
 });
 
 // Ye interceptor har request se pehle check karega ki token hai ya nahi
