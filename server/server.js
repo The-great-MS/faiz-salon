@@ -6,23 +6,31 @@ const connectDB = require('./config/db');
 // Route Imports
 const authRoutes = require('./routes/authRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
-const staffRoutes = require('./routes/staffRoutes'); // <-- Naya Import
-const appointmentRoutes = require('./routes/appointmentRoutes'); // <-- Naya Import
+const staffRoutes = require('./routes/staffRoutes');
+const appointmentRoutes = require('./routes/appointmentRoutes');
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
-app.use(cors());
+// CORS Configuration to allow local and Vercel production frontend
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'https://faiz-salon.vercel.app'
+    ],
+    credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/services', serviceRoutes);
-app.use('/api/staff', staffRoutes); // <-- Naya Mount
-app.use('/api/appointments', appointmentRoutes); // <-- Naya Mount
+app.use('/api/staff', staffRoutes);
+app.use('/api/appointments', appointmentRoutes);
 
 app.get('/', (req, res) => {
     res.send('Faiz Salon API is running...');
